@@ -8,22 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		6522D5B91BDA650A00ABD76A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6522D5B81BDA650A00ABD76A /* AppDelegate.swift */; };
-		6522D5BB1BDA650A00ABD76A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6522D5BA1BDA650A00ABD76A /* ViewController.swift */; };
 		6522D5BE1BDA650A00ABD76A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522D5BC1BDA650A00ABD76A /* Main.storyboard */; };
 		6522D5C11BDA650A00ABD76A /* Coupon_Catcher.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6522D5BF1BDA650A00ABD76A /* Coupon_Catcher.xcdatamodeld */; };
 		6522D5C31BDA650A00ABD76A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6522D5C21BDA650A00ABD76A /* Assets.xcassets */; };
 		6522D5C61BDA650A00ABD76A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6522D5C41BDA650A00ABD76A /* LaunchScreen.storyboard */; };
+		65E189311BDA84A8008391A9 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E189301BDA84A8008391A9 /* HistoryViewController.swift */; };
+		65E189331BDA8558008391A9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E189321BDA8558008391A9 /* MapKit.framework */; };
+		65FED7C91BDB4B9F00AFE08A /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FED7C81BDB4B9F00AFE08A /* DiscoverViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6522D5B51BDA650A00ABD76A /* Coupon Catcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coupon Catcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6522D5B81BDA650A00ABD76A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6522D5BA1BDA650A00ABD76A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6522D5BD1BDA650A00ABD76A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6522D5C01BDA650A00ABD76A /* Coupon_Catcher.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Coupon_Catcher.xcdatamodel; sourceTree = "<group>"; };
 		6522D5C21BDA650A00ABD76A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6522D5C51BDA650A00ABD76A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6522D5C71BDA650A00ABD76A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65E189301BDA84A8008391A9 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		65E189321BDA8558008391A9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		65FED7C81BDB4B9F00AFE08A /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65E189331BDA8558008391A9 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +45,7 @@
 		6522D5AC1BDA650A00ABD76A = {
 			isa = PBXGroup;
 			children = (
+				65E189321BDA8558008391A9 /* MapKit.framework */,
 				6522D5B71BDA650A00ABD76A /* Coupon Catcher */,
 				6522D5B61BDA650A00ABD76A /* Products */,
 			);
@@ -57,12 +63,13 @@
 			isa = PBXGroup;
 			children = (
 				6522D5B81BDA650A00ABD76A /* AppDelegate.swift */,
-				6522D5BA1BDA650A00ABD76A /* ViewController.swift */,
 				6522D5BC1BDA650A00ABD76A /* Main.storyboard */,
 				6522D5C21BDA650A00ABD76A /* Assets.xcassets */,
 				6522D5C41BDA650A00ABD76A /* LaunchScreen.storyboard */,
 				6522D5C71BDA650A00ABD76A /* Info.plist */,
 				6522D5BF1BDA650A00ABD76A /* Coupon_Catcher.xcdatamodeld */,
+				65E189301BDA84A8008391A9 /* HistoryViewController.swift */,
+				65FED7C81BDB4B9F00AFE08A /* DiscoverViewController.swift */,
 			);
 			path = "Coupon Catcher";
 			sourceTree = "<group>";
@@ -99,6 +106,11 @@
 					6522D5B41BDA650A00ABD76A = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = U6JW35454R;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -138,9 +150,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6522D5BB1BDA650A00ABD76A /* ViewController.swift in Sources */,
 				6522D5C11BDA650A00ABD76A /* Coupon_Catcher.xcdatamodeld in Sources */,
+				65FED7C91BDB4B9F00AFE08A /* DiscoverViewController.swift in Sources */,
 				6522D5B91BDA650A00ABD76A /* AppDelegate.swift in Sources */,
+				65E189311BDA84A8008391A9 /* HistoryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +265,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Coupon Catcher/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "au.edu.uow.Coupon-Catcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -263,6 +277,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Coupon Catcher/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "au.edu.uow.Coupon-Catcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -288,6 +303,7 @@
 				6522D5CC1BDA650A00ABD76A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
