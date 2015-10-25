@@ -11,12 +11,18 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-
+    let beaconCatcher = BeaconCatcher.sharedInstance
+    
+    func startBackgroundMonitoring() {
+        beaconCatcher.startBackgroundMonitoring()
+        print("Start background monitoring")
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil))
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "startBackgroundMonitoring", name: "LocationServiceEnabled", object: nil)
         return true
     }
 
