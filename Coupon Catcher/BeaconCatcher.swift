@@ -17,7 +17,7 @@ class BeaconCatcher: NSObject, CLLocationManagerDelegate {
     let uuid = "74278BDA-B644-4520-8F0C-720EAF059935"
     var monitoringAtBackground = false
     var monitoringAtForeground = false
-    var lastNotificationTimestamp: Int?
+    var beacons: [CLBeacon]?
     
     override init() {
         region = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: uuid)!, identifier: "CouponCatcherBeacons")
@@ -48,6 +48,8 @@ class BeaconCatcher: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+        NSNotificationCenter.defaultCenter().postNotificationName("BeaconsUpdated", object: nil)
+        self.beacons = beacons
     }
     
     func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {

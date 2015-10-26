@@ -8,18 +8,29 @@
 
 import UIKit
 
+struct ShopData {
+    var imageNames: [String]
+    var shopNames: [String]
+}
+
 class NearByViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     let beaconCatcher = BeaconCatcher.sharedInstance
     @IBOutlet var noLocationServiceView: UIView!
+    @IBOutlet var noLocationServiceLabel: UILabel!
     @IBOutlet var collectionView: UICollectionView!
-    let imageNames = ["phillips_island", "sydney", "quicksilver", "hot_balloons", "perisher"]
-    let shopNames = ["Phillips Island", "Sydney Nightlife", "Cairns Holiday", "Hot Balloon Adventure", "Snow Sport Outlet"]
+    var imageNames = [String]()
+    var shopNames = [String]()
+    var collection = [Int: ShopData]()
+    //let imageNames = ["phillips_island", "sydney", "quicksilver", "hot_balloons", "perisher"]
+    //let shopNames = ["Phillips Island", "Sydney Nightlife", "Cairns Holiday", "Hot Balloon Adventure", "Snow Sport Outlet"]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "startForegroundMonitoring", name: "LocationServiceEnabled", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "disableLocationService", name: "LocationServiceDisabled", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "beaconUpdateHandler", name: "BeaconsUpdated", object: nil)
         collectionView.backgroundColor = UIColor.clearColor()
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
     }
@@ -31,7 +42,41 @@ class NearByViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func disableLocationService() {
+        noLocationServiceLabel.text = "Location service not enabled for this application"
         noLocationServiceView.hidden = false
+    }
+    
+    func beaconUpdateHandler() {
+        let beacons = beaconCatcher.beacons
+        
+        if beacons != nil {
+            collection = [Int: ShopData]()
+            imageNames = [String]()
+            shopNames = [String]()
+            
+            for beacon in beacons! {
+                if beacon.minor == 65505 {
+                    //collection[65505] = ShopData(imageNames: ["phillips_island", "hot_balloons", "perisher"], shopNames: ["Phillips Island", "Hot Balloon Adventure", "Snow Sport Outlet"])
+                    imageNames = ["phillips_island", "sydney", "quicksilver", "hot_balloons", "perisher"]
+                    shopNames = ["Phillips Island", "Sydney Nightlife", "Cairns Holiday", "Hot Balloon Adventure", "Snow Sport Outlet"]
+                    
+                } else if beacon.minor == 512 {
+                    //collection[512] = ShopData(imageNames: ["sydney", "quicksilver"], shopNames: ["Sydney Nightlife", "Cairns Holiday"])
+                }
+            }
+            
+            reloadData()
+        }
+    }
+    
+    func reloadData() {
+        if imageNames.count > 0 {
+            noLocationServiceView.hidden = true
+            self.collectionView.reloadData()
+        } else {
+            noLocationServiceLabel.text = "No nearby shops found"
+            noLocationServiceView.hidden = false
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

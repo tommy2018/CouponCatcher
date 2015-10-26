@@ -26,5 +26,7 @@ extension Coupon {
     @NSManaged var shopTown: String?
     @NSManaged var validFrom: String?
     @NSManaged var validTo: String?
+    @NSManaged var category: String?
+    @NSManaged var used: NSNumber?
 
 }

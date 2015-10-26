@@ -19,6 +19,7 @@ struct CouponData {
     var couponFinePrint: String
     var background: String
     var phone: String
+    var category: String
 }
 
 class CouponDetailsViewController: UIViewController {
@@ -48,8 +49,10 @@ class CouponDetailsViewController: UIViewController {
         
         if couponID != nil {
             loadCoupon()
+            self.navigationItem.rightBarButtonItem?.title = "Save"
         } else if coupon != nil {
             displayCoupon(coupon!)
+            self.navigationItem.rightBarButtonItem?.title = "Use"
         } else if couponData != nil {
             displayCoupon(couponData!)
             self.navigationItem.rightBarButtonItem?.title = "Save"
@@ -59,6 +62,17 @@ class CouponDetailsViewController: UIViewController {
     }
     
     func displayCoupon(data: Coupon) {
+        let image = UIImage(named: data.background!)
+        
+        backgroundImageView.image = image
+        couponImageView.image = image
+        shopTownLabel.text = data.shopTown
+        shopPhoneLabel.text = data.phone
+        couponDescriptionLabel.text = data.desc
+        couponFinePrintLabel.text = data.finePrint
+        shopAddressStreetLabel.text = data.shopStreet
+        shopName.text = data.shopName
+        couponValidDateLabel.text = "\(data.validFrom!) to \(data.validTo!)"
     }
     
     func displayCoupon(data: CouponData) {
@@ -110,7 +124,26 @@ class CouponDetailsViewController: UIViewController {
     
     @IBAction func actionButtonPressed(sender: AnyObject) {
         if couponID != nil {
+            saveCoupon()
         } else if coupon != nil {
+            let alert = UIAlertController(title: "Coupon Code", message: "Coupon code: \(coupon!.code!)", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "Use", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction) in
+                let appDelegate = (UIApplication.sharedApplication().delegate) as! AppDelegate
+                let context = appDelegate.managedObjectContext
+                
+                self.coupon!.used = true
+                
+                do {
+                    try context.save()
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                } catch {
+                }
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         } else if couponData != nil {
             saveCoupon()
         }
@@ -121,13 +154,28 @@ class CouponDetailsViewController: UIViewController {
         let context: NSManagedObjectContext = appDelegate.managedObjectContext
         let coupon = NSEntityDescription.insertNewObjectForEntityForName("Coupon", inManagedObjectContext: context) as! Coupon
         
-        coupon.desc = ""
-        
-        do {
-            try context.save()
-            self.dismissViewControllerAnimated(true, completion: nil)
-        } catch {
+        if couponData != nil {
+            coupon.category = couponData!.category
+            coupon.shopName = couponData!.shopName
+            coupon.desc = couponData!.couponDesc
+            coupon.shopStreet = couponData!.shopStreet
+            coupon.shopTown = couponData!.shopTown
+            coupon.validFrom = couponData!.validFrom
+            coupon.validTo = couponData?.validTo
+            coupon.phone = couponData!.phone
+            coupon.finePrint = couponData!.couponFinePrint
+            coupon.used = false
+            coupon.code = "12345678"
+            coupon.shopLat = -16.864779
+            coupon.shopLng = 145.709610
+            coupon.background = couponData!.background
             
+            do {
+                try context.save()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } catch {
+            
+            }
         }
     }
 }

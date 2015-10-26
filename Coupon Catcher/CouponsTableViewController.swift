@@ -51,11 +51,11 @@ class CouponsTableViewController: UITableViewController {
         let controller = (segue.destinationViewController as! UINavigationController).visibleViewController as! CouponDetailsViewController
         
         if shopName! == "Phillips Island" {
-            let couponData = CouponData(shopName: "Phillips Island", shopStreet: "1019 Ventnor Rd", shopTown: "Summerlands, Victoria 3922", validFrom: "2015-10-23", validTo: "2015-11-01", couponDesc: "Experience a real farm and interact with animals at Phillips Island. 1 day tour with lunch provided just for $87.99!", couponFinePrint: "TBA", background: "taiwan", phone: "03 5952 2200")
+            let couponData = CouponData(shopName: "Phillips Island", shopStreet: "1019 Ventnor Rd", shopTown: "Summerlands, Victoria 3922", validFrom: "2015-10-23", validTo: "2015-11-01", couponDesc: "Experience a real farm and interact with animals at Phillips Island. 1 day tour with lunch provided just for $87.99!", couponFinePrint: "TBA", background: "taiwan", phone: "03 5952 2200", category: "Travel")
             
             controller.couponData = couponData
         } else if shopName! == "Hot Balloon Adventure" {
-            let couponData = CouponData(shopName: "Hot Balloon Adventure", shopStreet: "4 Pleasant Ave", shopTown: "North Wollongong NSW 2500", validFrom: "2015-10-01", validTo: "2015-11-28", couponDesc: "1.5 hour hot balloon tour with complimentary hot breakfast fot just $162. Offer ends 21st October!", couponFinePrint: "TBA", background: "on_hot_balloon", phone: "04 2212 1920")
+            let couponData = CouponData(shopName: "Hot Balloon Adventure", shopStreet: "4 Pleasant Ave", shopTown: "North Wollongong NSW 2500", validFrom: "2015-10-01", validTo: "2015-11-28", couponDesc: "1.5 hour hot balloon tour with complimentary hot breakfast fot just $162. Offer ends 21st October!", couponFinePrint: "TBA", background: "on_hot_balloon", phone: "04 2212 1920", category: "Travel")
             
             controller.couponData = couponData
         }

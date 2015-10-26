@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Automatic">
     <entity name="Coupon" representedClassName=".Coupon" syncable="YES">
         <attribute name="background" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="finePrint" optional="YES" attributeType="String" syncable="YES"/>
@@ -11,10 +12,11 @@
         <attribute name="shopName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shopStreet" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shopTown" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="used" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="validFrom" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="validTo" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Coupon" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="Coupon" positionX="-63" positionY="-18" width="128" height="255"/>
     </elements>
 </model>
