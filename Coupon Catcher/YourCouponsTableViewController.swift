@@ -11,6 +11,7 @@ import CoreData
 
 class YourCouponsTableViewController: UITableViewController {
     var coupons: [Coupon]?
+    let imageURL = "http://10.64.169.231/images/"
     @IBOutlet var editButton: UIBarButtonItem!
     
     override func viewDidLoad() {
@@ -35,9 +36,22 @@ class YourCouponsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("discoverCell", forIndexPath: indexPath) as! DiscoverListCell
         
-        if coupons![indexPath.row].background != nil {
-            cell.couponImageView.image = UIImage(named: coupons![indexPath.row].background!)
-        }
+        let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+        
+        dispatch_async(backgroundQueue, {
+            if let url = NSURL(string: "\(self.imageURL)\(self.coupons![indexPath.row].background!)") {
+                let imageData = NSData(contentsOfURL: url)
+                
+                if imageData != nil {
+                    let image = UIImage(data: imageData!)
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        cell.couponImageView.image = image
+                    })
+                }
+            }
+        })
+
         cell.coupounDescLabel.text = coupons![indexPath.row].desc
         cell.shopNameLabel.text = "🏪 \(coupons![indexPath.row].shopName!)"
         cell.categoryLabel.text = "🏷 \(coupons![indexPath.row].category!)"

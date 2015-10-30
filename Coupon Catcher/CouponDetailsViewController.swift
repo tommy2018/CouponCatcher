@@ -9,19 +9,6 @@
 import UIKit
 import CoreData
 
-struct CouponData {
-    var shopName: String
-    var shopStreet: String
-    var shopTown: String
-    var validFrom: String
-    var validTo: String
-    var couponDesc: String
-    var couponFinePrint: String
-    var background: String
-    var phone: String
-    var category: String
-}
-
 class CouponDetailsViewController: UIViewController {
     @IBOutlet var backgroundImageView: UIImageView!
     @IBOutlet var couponImageView: UIImageView!
@@ -37,20 +24,16 @@ class CouponDetailsViewController: UIViewController {
     @IBOutlet var shopName: UILabel!
     @IBOutlet var backButton: UIBarButtonItem!
     @IBOutlet var actionButton: UIBarButtonItem!
+    let imageURL = "http://10.64.169.231/images/"
     
-    let downloadingMsg = "Downloading the coupon for you. Good things always worth the wait."
     let errorMsg = "Unable to load the coupon"
-    var couponID: Int?
     var coupon: Coupon?
     var couponData: CouponData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if couponID != nil {
-            loadCoupon()
-            self.navigationItem.rightBarButtonItem?.title = "Save"
-        } else if coupon != nil {
+        if coupon != nil {
             displayCoupon(coupon!)
             self.navigationItem.rightBarButtonItem?.title = "Use"
         } else if couponData != nil {
@@ -64,7 +47,6 @@ class CouponDetailsViewController: UIViewController {
     func displayCoupon(data: Coupon) {
         let image = UIImage(named: data.background!)
         
-        backgroundImageView.image = image
         couponImageView.image = image
         shopTownLabel.text = data.shopTown
         shopPhoneLabel.text = data.phone
@@ -73,12 +55,28 @@ class CouponDetailsViewController: UIViewController {
         shopAddressStreetLabel.text = data.shopStreet
         shopName.text = data.shopName
         couponValidDateLabel.text = "\(data.validFrom!) to \(data.validTo!)"
+        
+        let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+        
+        dispatch_async(backgroundQueue, {
+            if let url = NSURL(string: "\(self.imageURL)\(data.background)") {
+                let imageData = NSData(contentsOfURL: url)
+                
+                if imageData != nil {
+                    let image = UIImage(data: imageData!)
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.backgroundImageView.image = image
+                        self.couponImageView.image = image
+                    })
+                }
+            }
+        })
     }
     
     func displayCoupon(data: CouponData) {
         let image = UIImage(named: data.background)
         
-        backgroundImageView.image = image
         couponImageView.image = image
         shopTownLabel.text = data.shopTown
         shopPhoneLabel.text = data.phone
@@ -87,28 +85,24 @@ class CouponDetailsViewController: UIViewController {
         shopAddressStreetLabel.text = data.shopStreet
         shopName.text = data.shopName
         couponValidDateLabel.text = "\(data.validFrom) to \(data.validTo)"
-    }
-    
-    func loadCoupon() {
-        /*
-        let urlSession = NSURLSession.sharedSession()
-        let components = NSURLComponents(string: "http://127.0.0.1")
-        let action = NSURLQueryItem(name: "do", value: "fetch-coupon")
-        let id = NSURLQueryItem(name: "id", value: couponID)
         
-        components?.queryItems = [action, id]
+        let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
         
-        msgView.hidden = false
-        msgImageView.image = UIImage(named: "cloud-download-grey")
-        msgLabel.text = self.downloadingMsg
+        dispatch_async(backgroundQueue, {
+            if let url = NSURL(string: "http://10.64.169.231/images/\(data.bg)") {
+                let imageData = NSData(contentsOfURL: url)
+                
+                if imageData != nil {
+                    let image = UIImage(data: imageData!)
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.backgroundImageView.image = image
+                        self.couponImageView.image = image
+                    })
+                }
+            }
+        })
         
-        if components?.URL != nil {
-            let task = urlSession.dataTaskWithURL(components!.URL!, completionHandler: {(data, response, error) in
-            })
-            
-            task.resume()
-        }
-        */
     }
     
     func errorHandler() {
@@ -123,9 +117,7 @@ class CouponDetailsViewController: UIViewController {
     }
     
     @IBAction func actionButtonPressed(sender: AnyObject) {
-        if couponID != nil {
-            saveCoupon()
-        } else if coupon != nil {
+        if coupon != nil {
             let alert = UIAlertController(title: "Coupon Code", message: "Coupon code: \(coupon!.code!)", preferredStyle: UIAlertControllerStyle.Alert)
             
             alert.addAction(UIAlertAction(title: "Use", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction) in
@@ -165,10 +157,10 @@ class CouponDetailsViewController: UIViewController {
             coupon.phone = couponData!.phone
             coupon.finePrint = couponData!.couponFinePrint
             coupon.used = false
-            coupon.code = "12345678"
-            coupon.shopLat = -16.864779
-            coupon.shopLng = 145.709610
-            coupon.background = couponData!.background
+            coupon.code = couponData!.code
+            coupon.shopLat = Double(couponData!.shopLat)
+            coupon.shopLng = Double(couponData!.shopLng)
+            coupon.background = couponData!.bg
             
             do {
                 try context.save()

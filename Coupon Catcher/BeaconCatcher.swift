@@ -20,9 +20,11 @@ class BeaconCatcher: NSObject, CLLocationManagerDelegate {
     var beacons: [CLBeacon]?
     
     override init() {
+        //Create beacon region
         region = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: uuid)!, identifier: "CouponCatcherBeacons")
         super.init()
         
+        //Ask for location service permission
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
             locationManager.requestAlwaysAuthorization()
         }
@@ -32,14 +34,18 @@ class BeaconCatcher: NSObject, CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedAlways {
+            //Notify other classes that location service is now enabled
             NSNotificationCenter.defaultCenter().postNotificationName("LocationServiceEnabled", object: nil)
         } else {
+            //Notify other classes that location service is no longer available
             NSNotificationCenter.defaultCenter().postNotificationName("LocationServiceDisabled", object: nil)
+            //Stop foreground monitoring
             if monitoringAtForeground {
                 monitoringAtForeground = false
                 locationManager.stopRangingBeaconsInRegion(region)
             }
             
+            //Stop background monitoring
             if monitoringAtBackground {
                 monitoringAtBackground = false
                 locationManager.stopMonitoringForRegion(region)
@@ -48,14 +54,15 @@ class BeaconCatcher: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+        //Notify other classes that the beacons array of this class has been updated
         NSNotificationCenter.defaultCenter().postNotificationName("BeaconsUpdated", object: nil)
         self.beacons = beacons
     }
     
     func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
         let notification = UILocalNotification()
-        
-        notification.alertBody = "Coupon Catcher discovered something special. Open the app to check that out!"
+        //Send a notification to user if: A. this app is not running and B. Beacons have been detected
+        notification.alertBody = "We discove something special for you. Open the app to check that out!"
         notification.soundName = UILocalNotificationDefaultSoundName
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
